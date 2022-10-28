@@ -146,8 +146,101 @@ from orders inner join order_details
     from products left outer join order_details
     on products.ProductID=order_details.ProductID
     where order_details.OrderID is null;
-            
     
+    #Left e right outer join
+    
+    select  ct.CustomerID, 
+    ct.contactName, 
+    od.OrderID, 
+    od.orderDate
+    from customers as CT left outer join orders as OD
+    on ct.CustomerID= od.CustomerID
+    where od.orderID is null
+    
+    union
+
+    select ct.CustomerID,
+    ct.contactName, 
+    od.OrderID, 
+    od.orderDate
+    from customers as CT right outer join orders as OD
+    on ct.CustomerID= od.CustomerID
+    where ct.customerID is null;
+    
+    #Exercicio
+    
+    select products.ProductID,
+		   products.productName,
+           categories.CategoryID,
+           categories.CategoryName
+           from products right outer join categories
+           on products.CategoryID=categories.CategoryID
+           where products.ProductID is null
+           
+           union
+           
+			select products.ProductID,
+		   products.productName,
+           categories.CategoryID,
+           categories.CategoryName
+           from products left outer join categories
+           on products.CategoryID=categories.CategoryID
+           where categories.CategoryID is null;
+           
+           
+           #create view
+           
+           create view cliente
+           as
+           select customerID,
+           contactName
+           from customers;
+           
+           select * from cliente;
+           
+           create or replace view cliente
+            as
+           select customerID,
+           contactName,
+           city,
+           Region
+           from customers;
+           
+           select * from cliente where city='Madrid';
+           
+           #exercicios view
+           
+           #ex1
+           
+           create or replace view ListaProdutosSemCat
+           as
+			select products.ProductID,
+		   products.productName,
+           categories.CategoryID,
+           categories.CategoryName
+           from products left outer join categories
+           on products.CategoryID=categories.CategoryID
+           where products.CategoryID is null;
+           
+           select * from ListaProdutosSemCat;
+           
+           #ex2
+           
+           create or replace view ListaClientePedidos
+           as
+           select customers.ContactName,
+           customers.customerID,
+           orders.orderID,
+           orders.orderDate
+           from customers inner join orders
+           on customers.CustomerID=orders.CustomerID;
+           
+           select * from ListaClientePedidos;
+           
+           
+           
+           
+
             
       
     
