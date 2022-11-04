@@ -125,7 +125,7 @@ from orders inner join order_details
                     orders.orderDate;
                     
                     
-	#Aula
+	#----------------------Aula----------------------------
     
     select customers.CustomerID,
     orders.OrderID,
@@ -147,7 +147,7 @@ from orders inner join order_details
     on products.ProductID=order_details.ProductID
     where order_details.OrderID is null;
     
-    #Left e right outer join
+    #-------------------Left e right outer join---------------------------------
     
     select  ct.CustomerID, 
     ct.contactName, 
@@ -188,7 +188,7 @@ from orders inner join order_details
            where categories.CategoryID is null;
            
            
-           #create view
+           #-----------------------create view---------------------------
            
            create view cliente
            as
@@ -238,16 +238,70 @@ from orders inner join order_details
            select * from ListaClientePedidos;
            
            
+           #---------------Funções-------------------------
+           
+           select ucase('banco de dados');
+           select lcase('BANCO DE DADOS');
+           
+           select concat('meu nome é: ', 'lucas');
+           
+           select concat(ucase(contactname), ' ', address) from customers;
+           
+           select orderID, orderDate, ADDDATE(orderDate,30) from orders;
+           
+           select DATEDIFF('2010-05-03','2010-05-04');
+           
+           select orderID, orderDate, DATEDIFF(curDate(),orderDate) from orders; 
+           
+           SELECT DATE_FORMAT('2010-05-03', '%d/%m/%Y');
+           
+           select orderID, orderDate, Date_Format(orderdate,'%d/%m/%Y') from orders; 
+           
+           SELECT DATE_FORMAT('2010-05-03','%W,%M of %Y');
+           
+		   select orderID, orderDate, Date_Format(orderdate,'%W,%M of %y') from orders; 
+           
+          
+          delimiter $$
+          create function ObterTitulo(IDfunc int)
+           returns char(4)
+           deterministic
+           begin
+           declare StrTitulo char(4);
+           select titleOfCourtesy into StrTitulo from employees
+           where EmployeeID=IDfunc;
+           return StrTitulo;
+           end
+           $$
+           
+           select ObterTitulo(1);
            
            
-
-            
-      
-    
-
-
-
-
-
-
-
+           
+           
+           
+           #Exercicio1
+           
+            delimiter $$
+          create function RetornarUpTitle(IDfunc int)
+           returns char(10)
+           deterministic
+           begin
+           declare StrTitulo char(10);
+           select ucase(titleOfCourtesy) into StrTitulo from employees
+           where EmployeeID=IDfunc;
+           if StrTitulo='MS.' then 
+           set StrTitulo='Senhorita';
+           elseif StrTitulo='DR.' then
+           set StrTitulo='doutor';
+           elseif StrTitulo='MRS.' then
+           set StrTitulo='senhora';
+           else
+           set StrTitulo='Senhor';
+           end if;
+           return StrTitulo;
+           end
+           $$
+           
+           
+           select RetornarUpTitle(2);
