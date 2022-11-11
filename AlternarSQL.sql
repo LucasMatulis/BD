@@ -305,3 +305,79 @@ from orders inner join order_details
            
            
            select RetornarUpTitle(2);
+           
+           
+           #-------------------------codigo para procedure de select--------------------------------
+           
+           select * from region;
+           
+           delimiter $$
+           create procedure sp_insereRegiao(idRegiao int, DSCregiao char(50))
+           begin
+           if(idRegiao is not null and 
+			  DSCregiao is not null)
+              then insert into region (regionid, regiondescription)
+              values(idRegiao, DSCregiao);
+              end if;
+              end
+              $$
+              
+		   call sp_insereRegiao(6,'Nordeste');
+           
+           #ex1
+             delimiter $$
+           create procedure sp_mudarRegiao(idRegiao int, DSCregiao char(50))
+           begin
+           if(idRegiao is not null and 
+			  DSCregiao is not null)
+              then update region set regiondescription=DSCregiao
+              where regionid=idRegiao;
+              end if;
+              end
+              $$
+              
+              call sp_mudarRegiao(5,'Sudoeste');
+              
+              #ex2
+             delimiter $$
+           create procedure sp_listaRegiao(idRegiao int)
+           begin
+           if(idRegiao is null)
+           then select * from region;
+           else select * from region
+           where regionid=idRegiao;
+              end if;
+              end
+              $$
+              
+              call sp_listaRegiao(2);
+              
+              #ex3
+                  delimiter $$
+           create procedure sp_deletarRegiao(idRegiao int)
+           begin
+           if(idRegiao is not null)
+              then delete from region
+              where regionid=idRegiao;
+              end if;
+              end
+              $$
+              
+              call sp_deletarRegiao(6);
+              
+              #--------------triggers------------------------------
+              
+              delimiter $$
+              create trigger tr_atualizaEstoque after insert on order_details
+              for each row
+              begin
+              if (new.productid is not null and new.quantity is not null)
+              then update products
+              set unitsinstock=unitinstock-new.quantity
+              where productid=new.productid;
+              end if;
+              end
+              $$
+              
+           
+           
