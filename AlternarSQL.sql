@@ -379,5 +379,22 @@ from orders inner join order_details
               end
               $$
               
+              #-----------------Criar usuarios
+              
+              create user '1142445383' identified by '1142445383';
+              
+              set password for '1142445383' = '12345';
+              
+              set password for '1142445383' = password('1234');
+              
+              
+              grant select on northwind.region to '1142445383'; 
+              
+              FLUSH PRIVILEGES;
+              
+              revoke all privileges on northwind.* from '1142445383';
+              
+              drop user '1142445383';
+              
            
            
