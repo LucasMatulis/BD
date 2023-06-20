@@ -159,6 +159,47 @@ select orderid, shipname, concat(shipname, ' ',rand()) as 'texto concatenado' fr
 
 select orderid, shipname, left(shipname, 5) from orders;
 
+#RIGHT
+
+select orderid, shipname, RIGHT(shipname, 5) from orders;
+
+#SUBSTRING
+
+select orderid, shipname, substring(shipname, 2,5) from orders;
+
+#lowercase
+
+select orderid, shipname, lower(shipname) from orders;
+
+#Uppercase
+
+select orderid, shipname, upper(shipname) from orders;
+
+#length
+
+select orderid, shipname, length(shipname) from orders;
+
+select orderid, shipname, concat(upper(left(shipname,1)), lower(substring(shipname, 2, length(shipname)))) from orders;
+
+#TRIM
+
+select '          oi              ';
+
+select length('           oi         ');
+
+#LTRIM
+
+select ltrim('           oi         ');
+
+select rtrim('           oi         ');
+
+select ltrim(rtrim('           oi         '));
+
+
+
+
+
+
 
 
 
